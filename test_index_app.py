@@ -1,6 +1,6 @@
 import unittest
 from unittest.mock import patch, MagicMock
-from index_web_app import (
+from web_inverted_index import (
     build_inverted_index, compress_index_gamma, decompress_index_gamma,
     elias_gamma_encode, elias_gamma_decode
 )
