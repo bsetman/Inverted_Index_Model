@@ -54,7 +54,6 @@ class Pages(BaseModel):
 
 # ======================================
 # Inverted-Index & Compression Functions
-# (adapted from 1234.py)
 # ======================================
 
 def build_inverted_index(documents: dict[int, str]) -> dict[str, list[int]]:
