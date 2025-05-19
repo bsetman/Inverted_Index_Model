@@ -6,18 +6,18 @@ from web_inverted_index import app, Base, InvertedIndex, SessionLocal, elias_gam
 
 client = TestClient(app)
 
-# 使用内存数据库进行测试（或你也可以设为测试 PostgreSQL 实例）
+
 TEST_DB_URL = "sqlite:///:memory:"
 engine = create_engine(TEST_DB_URL, connect_args={"check_same_thread": False})
 TestingSessionLocal = sessionmaker(bind=engine)
 
-# 重写原数据库会话
+
 Base.metadata.create_all(bind=engine)
 app.dependency_overrides[SessionLocal] = TestingSessionLocal
 
 @pytest.fixture(autouse=True)
 def clean_db():
-    # 每个测试用例前清空表
+
     session = TestingSessionLocal()
     session.query(InvertedIndex).delete()
     session.commit()
@@ -38,7 +38,7 @@ def test_index_pages_failure(monkeypatch):
     assert response.status_code == 404
 
 def test_search_existing_term():
-    # 手动插入词项 fastapi -> doc_id 1
+    # Вручную вставьте термин fastapi -> doc_id 1
     session = TestingSessionLocal()
     bitstring = "01001"  # Elias Gamma(1) = "1"
     session.add(InvertedIndex(term="fastapi", postings=bitstring.encode("utf-8")))
@@ -61,7 +61,7 @@ def test_elias_gamma_compression():
     bits = "".join(elias_gamma_encode(d) for d in diffs)
     decoded = elias_gamma_decode(bits)
 
-    # 还原累计值
+
     result = []
     acc = 0
     for d in decoded:
